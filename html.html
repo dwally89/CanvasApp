@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="logger.js"></script>
+        <script src="util.js"></script>
+        <script src="square.js"></script>
+        <script src="squareEventBinder.js"></script>
+        <script src="canvas.js"></script>
+        <script src="drawer.js"></script>
+        <script src="home.js"></script>
+        <title>Canvas App</title>
+    </head>
+    <body>
+        <div id="square_container"></div>
+        <div class="above_canvas">
+            <input id="txt_colour" type="text" onkeyup="Home.txtColourKeyUp();"/>
+            <button id="btn_create_square" onclick="Home.btnCreateSquareClick();">Create square</button>
+        </div>
+    </body>
+</html>
