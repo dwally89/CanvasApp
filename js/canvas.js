@@ -2,32 +2,40 @@ var CanvasModel = function() {
     var squares = [];
     var drawer = new CanvasDrawer();
     return {
-        addSquare: function(colour) {
+        addSquare: function(parameter, squareType) {
             var square = null;
             var closeSquare = new CloseSquare(25, 25, "orange");
-            if (drawer.verifyColour(colour)) {
-                square = new ColourSquare(
-                    100,
-                    100,
-                    closeSquare,
-                    colour);
+            if (squareType === "colour") {
+                if (drawer.verifyColour(parameter)) {
+                    square = new ColourSquare(
+                        100,
+                        100,
+                        closeSquare,
+                        parameter);
+                }
+                else {
+                    alert("Invalid colour");
+                    return;
+                }
             }
-            else if (colour === "bunny") {
+            else if (squareType === "image") {
+                var imageSource = "https://static-s.aa-cdn.net/img/gp/20600003844258/ZPZU6Ppsd4z1x4SOzP7P5O3KWe3LtoX4v_ZAyxbIHLEZMKJbiAih229_pSow783DSGw=w300?v=1";
+                if (parameter !== ""){
+                    imageSource = parameter;
+                }
+                
                 square = new ImageSquare(
                     100,
                     100,
                     closeSquare,
-                    "https://static-s.aa-cdn.net/img/gp/20600003844258/ZPZU6Ppsd4z1x4SOzP7P5O3KWe3LtoX4v_ZAyxbIHLEZMKJbiAih229_pSow783DSGw=w300?v=1");
+                    imageSource);
             }
-            else {
-                alert("Invalid colour");
-                return;
-            }
+
 
             square.setX(Math.floor(Math.random() * 800));
             square.setY(Math.floor(Math.random() * 600));
-            
-            
+
+
             drawer.addSquare(square);
             squares.push(closeSquare);
             squares.push(square);
@@ -35,7 +43,7 @@ var CanvasModel = function() {
         },
         deleteSquare: function(square) {
             var squareToRemove = square;
-            while (squareToRemove !== null){
+            while (squareToRemove !== null) {
                 Utils.deleteFromArray(squares, squareToRemove);
                 drawer.deleteSquare(squareToRemove);
                 squareToRemove = squareToRemove.getCloseSquare();
@@ -49,7 +57,8 @@ var CanvasModel = function() {
                     if (closeSquare !== null && closeSquare.containsPoint(x, y)) {
                         Logger.debug("Found close square");
                         return closeSquare;
-                    } else {
+                    }
+                    else {
                         Logger.debug("Found square");
                         return square;
                     }

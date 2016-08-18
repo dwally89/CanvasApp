@@ -6,9 +6,11 @@ var Home = (function() {
 
     return {
         btnCreateSquareClick: function() {
-            canvas.addSquare($("#txt_colour").val());
+            var parameter = $("#txt_colour").val();
+            var squareType = $("#ddl_square_type").find(":selected").val();
+            canvas.addSquare(parameter, squareType);
         },
-        txtColourKeyUp: function() {
+        txtParameterKeyUp: function() {
             if (event.keyCode == 13) {
                 this.btnCreateSquareClick();
             }

@@ -14,7 +14,11 @@
     <body>
         <div id="square_container"></div>
         <div class="above_canvas">
-            <input id="txt_colour" type="text" onkeyup="Home.txtColourKeyUp();"/>
+            <input id="txt_parameter" type="text" onkeyup="Home.txtParameterKeyUp();"/>
+            <select id="ddl_square_type">
+                <option value="colour">Colour square</option>
+                <option value="image">Image square</option>
+            </select>
             <button id="btn_create_square" onclick="Home.btnCreateSquareClick();">Create square</button>
         </div>
     </body>
