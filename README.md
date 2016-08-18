@@ -1,4 +1,2 @@
 # CanvasApp
-Canvas app developed on Chromebook
-
-another test
+Canvas app developed on Chromebook.
