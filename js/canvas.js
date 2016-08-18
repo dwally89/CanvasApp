@@ -3,13 +3,18 @@ var CanvasModel = function() {
     var drawer = new CanvasDrawer();
     return {
         addSquare: function(parameter, squareType) {
+            var squareWidth = 100;
+            var squareHeight = 100;
             var square = null;
-            var closeSquare = new CloseSquare(25, 25, "orange");
+            var closeSquare = new CloseSquare(
+                squareWidth / 4,
+                squareHeight / 4,
+                "orange");
             if (squareType === "colour") {
                 if (drawer.verifyColour(parameter)) {
                     square = new ColourSquare(
-                        100,
-                        100,
+                        squareWidth,
+                        squareHeight,
                         closeSquare,
                         parameter);
                 }
@@ -20,13 +25,13 @@ var CanvasModel = function() {
             }
             else if (squareType === "image") {
                 var imageSource = "https://static-s.aa-cdn.net/img/gp/20600003844258/ZPZU6Ppsd4z1x4SOzP7P5O3KWe3LtoX4v_ZAyxbIHLEZMKJbiAih229_pSow783DSGw=w300?v=1";
-                if (parameter !== ""){
+                if (parameter !== "") {
                     imageSource = parameter;
                 }
-                
+
                 square = new ImageSquare(
-                    100,
-                    100,
+                    squareWidth,
+                    squareHeight,
                     closeSquare,
                     imageSource);
             }

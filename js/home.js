@@ -6,7 +6,7 @@ var Home = (function() {
 
     return {
         btnCreateSquareClick: function() {
-            var parameter = $("#txt_colour").val();
+            var parameter = $("#txt_parameter").val();
             var squareType = $("#ddl_square_type").find(":selected").val();
             canvas.addSquare(parameter, squareType);
         },
