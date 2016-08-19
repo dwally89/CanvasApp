@@ -13,7 +13,7 @@ var CloseSquare = function(width, height, colour) {
     square.getX1 = function() {
         return this.parentSquare.getX2() - width;
     };
-    
+
     square.getY1 = function() {
         return this.parentSquare.getY1();
     };
@@ -27,7 +27,7 @@ var ImageSquare = function(width, height, closeSquare, imageSource) {
     return square;
 };
 
-var Edge = (function(){
+var Edge = (function() {
     return {
         Bottom: "bottom",
         Top: "top",
@@ -82,22 +82,39 @@ var Square = function(width, height, type, closeSquare) {
                 pointY >= this.getY1() - epsilon &&
                 pointY <= this.getY1() + epsilon &&
                 pointX >= this.getX1() - epsilon &&
-                pointX <= this.getX2() + epsilon){
+                pointX <= this.getX2() + epsilon) {
                 edgeTouched = Edge.Top;
                 Logger.debug("touched top");
-            } else if(
+            }
+            else if (
                 pointY >= this.getY2() - epsilon &&
                 pointY <= this.getY2() + epsilon &&
                 pointX >= this.getX1() - epsilon &&
-                pointX <= this.getX2() + epsilon){
+                pointX <= this.getX2() + epsilon) {
                 edgeTouched = Edge.Bottom;
                 Logger.debug("touched bottom");
-            } else {
+            }
+            else if (
+                pointY >= this.getY1() - epsilon &&
+                pointY <= this.getY2() + epsilon &&
+                pointX >= this.getX1() - epsilon &&
+                pointX <= this.getX1() + epsilon) {
+                edgeTouched = Edge.Left;
+                Logger.debug("touched left");
+            }
+            else if (
+                pointY >= this.getY1() - epsilon &&
+                pointY <= this.getY2() + epsilon &&
+                pointX >= this.getX2() - epsilon &&
+                pointX <= this.getX2() + epsilon) {
+                edgeTouched = Edge.Right;
+                Logger.debug("touched right");
+            }
+            else {
                 edgeTouched = null;
-                Logger.debug("didn't touch edge");
             }
         },
-        getEdgeTouched: function(){
+        getEdgeTouched: function() {
             return edgeTouched;
         }
     };

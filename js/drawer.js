@@ -67,6 +67,8 @@ CanvasDrawer = function() {
                     element.style.cursor = "default";
                 }else if (edgeTouched === Edge.Top || edgeTouched === Edge.Bottom){
                     element.style.cursor = "ns-resize";
+                } else {
+                    element.style.cursor = "ew-resize";
                 }
             }
         },

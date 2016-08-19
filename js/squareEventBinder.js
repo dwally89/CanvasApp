@@ -16,8 +16,8 @@ var SquareEventBinder = (function() {
                 startX = event.pageX;
                 startY = event.pageY;
                 Logger.debug("mouse start: (" + startX + "," + startY + ")");
-                squareStartX = square.getX();
-                squareStartY = square.getY();
+                squareStartX = square.getX1();
+                squareStartY = square.getY1();
                 Logger.debug("square start: (" + squareStartX + "," + squareStartY + ")");
                 moving = true;
             });
@@ -49,8 +49,8 @@ var SquareEventBinder = (function() {
                         var dx = event.pageX - startX;
                         var dy = event.pageY - startY;
                         Logger.debug("deltas: (" + dx + "," + dy + ")");
-                        square.setX(squareStartX + dx);
-                        square.setY(squareStartY + dy);
+                        square.setX1(squareStartX + dx);
+                        square.setY1(squareStartY + dy);
                     }
                 }
 
