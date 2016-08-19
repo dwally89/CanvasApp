@@ -53,15 +53,21 @@ var SquareEventBinder = (function() {
                         var edgeTouched = square.getEdgeTouched();
                         var dx = event.pageX - startX;
                         var dy = event.pageY - startY;
+                        Logger.debug("deltas: (" + dx + "," + dy + ")");
                         if (edgeTouched === null){
-                            Logger.debug("deltas: (" + dx + "," + dy + ")");
                             square.setX1(squareStartX + dx);
                             square.setY1(squareStartY + dy);
                         } else {
-                            if (edgeTouched == Edge.Bottom) {
+                            if (edgeTouched === Edge.Bottom) {
                                 square.setHeight(squareOriginalHeight + dy);
-                            } else if (edgeTouched == Edge.Right) {
+                            } else if (edgeTouched === Edge.Right) {
                                 square.setWidth(squareOriginalWidth + dx);
+                            } else if (edgeTouched === Edge.Top) {
+                                square.setY1(squareStartY + dy);
+                                square.setHeight(squareOriginalHeight - dy);
+                            } else if (edgeTouched === Edge.Left) {
+                                square.setX1(squareStartX + dx);
+                                square.setWidth(squareOriginalWidth - dx);
                             }
                         }
                     }
