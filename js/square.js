@@ -27,9 +27,19 @@ var ImageSquare = function(width, height, closeSquare, imageSource) {
     return square;
 };
 
+var Edge = (function(){
+    return {
+        Bottom: "bottom",
+        Top: "top",
+        Left: "left",
+        Right: "right"
+    };
+}());
+
 var Square = function(width, height, type, closeSquare) {
     var x = 0;
     var y = 0;
+    var edgeTouched = null;
     var square = {
         isTouched: false,
         parentSquare: null,
@@ -63,6 +73,22 @@ var Square = function(width, height, type, closeSquare) {
         },
         setY: function(newY) {
             y = newY;
+        },
+        detectEdgeTouched: function(pointX, pointY) {
+            var epsilon = 10;
+            if (pointY >= this.getY() - epsilon &&
+            pointY <= this.getY() + epsilon &&
+            pointX >= this.getX() - epsilon &&
+            pointX <= this.getX() + this.getWidth() + epsilon){
+                edgeTouched = Edge.Top;
+                Logger.debug("touched top");
+            } else {
+                edgeTouched = null;
+                Logger.debug("didn't touch edge");
+            }
+        },
+        getEdgeTouched: function(){
+            return edgeTouched;
         }
     };
 

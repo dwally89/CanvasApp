@@ -38,18 +38,20 @@ var SquareEventBinder = (function() {
                     }
                 
                     square = newSquare;
+                    if (square !== null) {
+                        square.detectEdgeTouched(event.pageX, event.pageY);
+                    }
                 }
                 
                 if (square !== null) {
                     square.isTouched = true;
-                }
-
-                if (moving && square !== null) {
-                    var dx = event.pageX - startX;
-                    var dy = event.pageY - startY;
-                    Logger.debug("deltas: (" + dx + "," + dy + ")");
-                    square.setX(squareStartX + dx);
-                    square.setY(squareStartY + dy);
+                    if (moving) {
+                        var dx = event.pageX - startX;
+                        var dy = event.pageY - startY;
+                        Logger.debug("deltas: (" + dx + "," + dy + ")");
+                        square.setX(squareStartX + dx);
+                        square.setY(squareStartY + dy);
+                    }
                 }
 
                 canvas.update();

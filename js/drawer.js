@@ -61,6 +61,11 @@ CanvasDrawer = function() {
                 element.style.left = Utils.toPixels(square.getX());
                 element.style.top = Utils.toPixels(square.getY());
                 element.style.opacity = square.isTouched ? 0.5 : 1;
+                if (square.getEdgeTouched() === null){
+                    element.style.cursor = "default";
+                }else{
+                    element.style.cursor = "ns-resize";
+                }
             }
         },
     };
