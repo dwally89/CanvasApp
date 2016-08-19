@@ -7,6 +7,7 @@ var SquareEventBinder = (function() {
             var squareStartX = 0;
             var squareStartY = 0;
             var squareOriginalHeight = 0;
+            var squareOriginalWidth = 0;
             var square = null;
             element.mousedown(function(event) {
                 square = canvas.findSquare(event.pageX, event.pageY);
@@ -20,6 +21,7 @@ var SquareEventBinder = (function() {
                 squareStartX = square.getX1();
                 squareStartY = square.getY1();
                 squareOriginalHeight = square.getHeight();
+                squareOriginalWidth = square.getWidth();
                 Logger.debug("square start: (" + squareStartX + "," + squareStartY + ")");
                 moving = true;
             });
@@ -58,6 +60,8 @@ var SquareEventBinder = (function() {
                         } else {
                             if (edgeTouched == Edge.Bottom) {
                                 square.setHeight(squareOriginalHeight + dy);
+                            } else if (edgeTouched == Edge.Right) {
+                                square.setWidth(squareOriginalWidth + dx);
                             }
                         }
                     }

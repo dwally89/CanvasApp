@@ -46,6 +46,9 @@ var Square = function(width, height, type, closeSquare) {
         getWidth: function() {
             return width;
         },
+        setWidth: function(newWidth) {
+            width = newWidth;
+        },
         getHeight: function() {
             return height;
         },
