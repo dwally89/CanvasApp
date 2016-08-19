@@ -58,12 +58,14 @@ CanvasDrawer = function() {
                     element.src = square.imageSource;
                 }
 
-                element.style.left = Utils.toPixels(square.getX());
-                element.style.top = Utils.toPixels(square.getY());
+                element.style.left = Utils.toPixels(square.getX1());
+                element.style.top = Utils.toPixels(square.getY1());
                 element.style.opacity = square.isTouched ? 0.5 : 1;
-                if (square.getEdgeTouched() === null){
+                
+                var edgeTouched = square.getEdgeTouched();
+                if (edgeTouched === null){
                     element.style.cursor = "default";
-                }else{
+                }else if (edgeTouched === Edge.Top || edgeTouched === Edge.Bottom){
                     element.style.cursor = "ns-resize";
                 }
             }

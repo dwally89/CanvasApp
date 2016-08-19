@@ -37,8 +37,8 @@ var CanvasModel = function() {
             }
 
 
-            square.setX(Math.floor(Math.random() * 800));
-            square.setY(Math.floor(Math.random() * 600));
+            square.setX1(Math.floor(Math.random() * 800));
+            square.setY1(Math.floor(Math.random() * 600));
 
 
             drawer.addSquare(square);
