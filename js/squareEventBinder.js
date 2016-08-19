@@ -6,6 +6,8 @@ var SquareEventBinder = (function() {
             var startY = 0;
             var squareStartX = 0;
             var squareStartY = 0;
+            var squareOriginalHeight = 0;
+            var squareOriginalWidth = 0;
             var square = null;
             element.mousedown(function(event) {
                 square = canvas.findSquare(event.pageX, event.pageY);
@@ -16,8 +18,10 @@ var SquareEventBinder = (function() {
                 startX = event.pageX;
                 startY = event.pageY;
                 Logger.debug("mouse start: (" + startX + "," + startY + ")");
-                squareStartX = square.getX();
-                squareStartY = square.getY();
+                squareStartX = square.getX1();
+                squareStartY = square.getY1();
+                squareOriginalHeight = square.getHeight();
+                squareOriginalWidth = square.getWidth();
                 Logger.debug("square start: (" + squareStartX + "," + squareStartY + ")");
                 moving = true;
             });
@@ -38,18 +42,35 @@ var SquareEventBinder = (function() {
                     }
                 
                     square = newSquare;
+                    if (square !== null) {
+                        square.detectEdgeTouched(event.pageX, event.pageY);
+                    }
                 }
                 
                 if (square !== null) {
                     square.isTouched = true;
-                }
-
-                if (moving && square !== null) {
-                    var dx = event.pageX - startX;
-                    var dy = event.pageY - startY;
-                    Logger.debug("deltas: (" + dx + "," + dy + ")");
-                    square.setX(squareStartX + dx);
-                    square.setY(squareStartY + dy);
+                    if (moving) {
+                        var edgeTouched = square.getEdgeTouched();
+                        var dx = event.pageX - startX;
+                        var dy = event.pageY - startY;
+                        Logger.debug("deltas: (" + dx + "," + dy + ")");
+                        if (edgeTouched === null){
+                            square.setX1(squareStartX + dx);
+                            square.setY1(squareStartY + dy);
+                        } else {
+                            if (edgeTouched === Edge.Bottom) {
+                                square.setHeight(squareOriginalHeight + dy);
+                            } else if (edgeTouched === Edge.Right) {
+                                square.setWidth(squareOriginalWidth + dx);
+                            } else if (edgeTouched === Edge.Top) {
+                                square.setY1(squareStartY + dy);
+                                square.setHeight(squareOriginalHeight - dy);
+                            } else if (edgeTouched === Edge.Left) {
+                                square.setX1(squareStartX + dx);
+                                square.setWidth(squareOriginalWidth - dx);
+                            }
+                        }
+                    }
                 }
 
                 canvas.update();

@@ -36,10 +36,9 @@ var CanvasModel = function() {
                     imageSource);
             }
 
-
-            square.setX(Math.floor(Math.random() * 800));
-            square.setY(Math.floor(Math.random() * 600));
-
+            // Set initial position to random area
+            square.setX1(Math.floor(Math.random() * 800));
+            square.setY1(Math.floor(Math.random() * 600));
 
             drawer.addSquare(square);
             squares.push(closeSquare);

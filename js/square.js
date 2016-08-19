@@ -10,16 +10,16 @@ var ColourSquare = function(width, height, closeSquare, colour) {
 
 var CloseSquare = function(width, height, colour) {
     var square = new ColourSquare(width, height, null, colour);
-    square.getX = function() {
-        return this.parentSquare.getX() + this.parentSquare.getWidth() - width;
+    square.getX1 = function() {
+        return this.parentSquare.getX2() - width;
     };
-    
-    square.getY = function() {
-        return this.parentSquare.getY();
+
+    square.getY1 = function() {
+        return this.parentSquare.getY1();
     };
 
     return square;
-}
+};
 
 var ImageSquare = function(width, height, closeSquare, imageSource) {
     var square = new Square(width, height, "ImageSquare", closeSquare);
@@ -27,17 +27,33 @@ var ImageSquare = function(width, height, closeSquare, imageSource) {
     return square;
 };
 
+var Edge = (function() {
+    return {
+        Bottom: "bottom",
+        Top: "top",
+        Left: "left",
+        Right: "right"
+    };
+}());
+
 var Square = function(width, height, type, closeSquare) {
     var x = 0;
     var y = 0;
+    var edgeTouched = null;
     var square = {
         isTouched: false,
         parentSquare: null,
         getWidth: function() {
             return width;
         },
+        setWidth: function(newWidth) {
+            width = newWidth;
+        },
         getHeight: function() {
             return height;
+        },
+        setHeight: function(newHeight) {
+            height = newHeight;
         },
         getType: function() {
             return type;
@@ -46,23 +62,66 @@ var Square = function(width, height, type, closeSquare) {
             return closeSquare;
         },
         containsPoint: function(pointX, pointY) {
-            var minX = this.getX();
-            var minY = this.getY();
-            var maxX = minX + this.getWidth();
-            var maxY = minY + this.getHeight();
-            return pointX >= minX && pointX <= maxX && pointY >= minY && pointY <= maxY;
+            return pointX >= this.getX1() && pointX <= this.getX2() && pointY >= this.getY1() && pointY <= this.getY2();
         },
-        getX: function() {
+        getX1: function() {
             return x;
         },
-        getY: function() {
+        getX2: function() {
+            return this.getX1() + this.getWidth();
+        },
+        getY1: function() {
             return y;
         },
-        setX: function(newX) {
+        getY2: function() {
+            return this.getY1() + this.getHeight();
+        },
+        setX1: function(newX) {
             x = newX;
         },
-        setY: function(newY) {
+        setY1: function(newY) {
             y = newY;
+        },
+        detectEdgeTouched: function(pointX, pointY) {
+            var epsilon = 10;
+            if (
+                pointY >= this.getY1() - epsilon &&
+                pointY <= this.getY1() + epsilon &&
+                pointX >= this.getX1() - epsilon &&
+                pointX <= this.getX2() + epsilon) {
+                edgeTouched = Edge.Top;
+            }
+            else if (
+                pointY >= this.getY2() - epsilon &&
+                pointY <= this.getY2() + epsilon &&
+                pointX >= this.getX1() - epsilon &&
+                pointX <= this.getX2() + epsilon) {
+                edgeTouched = Edge.Bottom;
+            }
+            else if (
+                pointY >= this.getY1() - epsilon &&
+                pointY <= this.getY2() + epsilon &&
+                pointX >= this.getX1() - epsilon &&
+                pointX <= this.getX1() + epsilon) {
+                edgeTouched = Edge.Left;
+            }
+            else if (
+                pointY >= this.getY1() - epsilon &&
+                pointY <= this.getY2() + epsilon &&
+                pointX >= this.getX2() - epsilon &&
+                pointX <= this.getX2() + epsilon) {
+                edgeTouched = Edge.Right;
+            }
+            else {
+                edgeTouched = null;
+            }
+            
+            if (edgeTouched !== null) {
+                Logger.debug("touched " + edgeTouched);
+            }
+        },
+        getEdgeTouched: function() {
+            return edgeTouched;
         }
     };
 
