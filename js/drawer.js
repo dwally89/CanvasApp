@@ -22,9 +22,6 @@ CanvasDrawer = function() {
 
             if (element !== null) {
                 element.className = "square";
-                element.style.width = Utils.toPixels(square.getWidth());
-                element.style.height = Utils.toPixels(square.getHeight());
-
                 squares.push(square);
                 elements.push(element);
                 $("#square_container").append(element);
@@ -33,8 +30,6 @@ CanvasDrawer = function() {
                 if (closeSquare !== null) {
                     var closeElement = document.createElement("div");
                     closeElement.style.position = "fixed";
-                    closeElement.style.width = Utils.toPixels(closeSquare.getWidth());
-                    closeElement.style.height = Utils.toPixels(closeSquare.getHeight());
 
                     elements.push(closeElement);
                     squares.push(closeSquare);
@@ -60,6 +55,8 @@ CanvasDrawer = function() {
 
                 element.style.left = Utils.toPixels(square.getX1());
                 element.style.top = Utils.toPixels(square.getY1());
+                element.style.width = Utils.toPixels(square.getWidth());
+                element.style.height = Utils.toPixels(square.getHeight());
                 element.style.opacity = square.isTouched ? 0.5 : 1;
                 
                 var edgeTouched = square.getEdgeTouched();

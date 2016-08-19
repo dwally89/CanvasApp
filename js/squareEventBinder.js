@@ -6,6 +6,7 @@ var SquareEventBinder = (function() {
             var startY = 0;
             var squareStartX = 0;
             var squareStartY = 0;
+            var squareOriginalHeight = 0;
             var square = null;
             element.mousedown(function(event) {
                 square = canvas.findSquare(event.pageX, event.pageY);
@@ -18,6 +19,7 @@ var SquareEventBinder = (function() {
                 Logger.debug("mouse start: (" + startX + "," + startY + ")");
                 squareStartX = square.getX1();
                 squareStartY = square.getY1();
+                squareOriginalHeight = square.getHeight();
                 Logger.debug("square start: (" + squareStartX + "," + squareStartY + ")");
                 moving = true;
             });
@@ -46,11 +48,18 @@ var SquareEventBinder = (function() {
                 if (square !== null) {
                     square.isTouched = true;
                     if (moving) {
+                        var edgeTouched = square.getEdgeTouched();
                         var dx = event.pageX - startX;
                         var dy = event.pageY - startY;
-                        Logger.debug("deltas: (" + dx + "," + dy + ")");
-                        square.setX1(squareStartX + dx);
-                        square.setY1(squareStartY + dy);
+                        if (edgeTouched === null){
+                            Logger.debug("deltas: (" + dx + "," + dy + ")");
+                            square.setX1(squareStartX + dx);
+                            square.setY1(squareStartY + dy);
+                        } else {
+                            if (edgeTouched == Edge.Bottom) {
+                                square.setHeight(squareOriginalHeight + dy);
+                            }
+                        }
                     }
                 }
 

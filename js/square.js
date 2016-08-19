@@ -49,6 +49,9 @@ var Square = function(width, height, type, closeSquare) {
         getHeight: function() {
             return height;
         },
+        setHeight: function(newHeight) {
+            height = newHeight;
+        },
         getType: function() {
             return type;
         },
@@ -84,7 +87,6 @@ var Square = function(width, height, type, closeSquare) {
                 pointX >= this.getX1() - epsilon &&
                 pointX <= this.getX2() + epsilon) {
                 edgeTouched = Edge.Top;
-                Logger.debug("touched top");
             }
             else if (
                 pointY >= this.getY2() - epsilon &&
@@ -92,7 +94,6 @@ var Square = function(width, height, type, closeSquare) {
                 pointX >= this.getX1() - epsilon &&
                 pointX <= this.getX2() + epsilon) {
                 edgeTouched = Edge.Bottom;
-                Logger.debug("touched bottom");
             }
             else if (
                 pointY >= this.getY1() - epsilon &&
@@ -100,7 +101,6 @@ var Square = function(width, height, type, closeSquare) {
                 pointX >= this.getX1() - epsilon &&
                 pointX <= this.getX1() + epsilon) {
                 edgeTouched = Edge.Left;
-                Logger.debug("touched left");
             }
             else if (
                 pointY >= this.getY1() - epsilon &&
@@ -108,10 +108,13 @@ var Square = function(width, height, type, closeSquare) {
                 pointX >= this.getX2() - epsilon &&
                 pointX <= this.getX2() + epsilon) {
                 edgeTouched = Edge.Right;
-                Logger.debug("touched right");
             }
             else {
                 edgeTouched = null;
+            }
+            
+            if (edgeTouched !== null) {
+                Logger.debug("touched " + edgeTouched);
             }
         },
         getEdgeTouched: function() {
