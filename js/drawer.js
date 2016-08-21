@@ -34,7 +34,7 @@ CanvasDrawer = function() {
                 var closeSquare = square.getCloseSquare();
                 if (closeSquare !== null) {
                     var closeElement = document.createElement("div");
-                    closeElement.style.position = "fixed";
+                    closeElement.style.position = "absolute";
 
                     elements.push(closeElement);
                     squares.push(closeSquare);
