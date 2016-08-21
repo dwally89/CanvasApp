@@ -1,6 +1,13 @@
 CanvasDrawer = function() {
-    var squares = []
+    var squares = [];
     var elements = [];
+    var addElement = function(element, square) {
+        element.className = "square";
+        squares.push(square);
+        elements.push(element);
+        $("#square_container").append(element);
+    };
+    
     return {
         verifyColour: function(colour) {
             var defaultColour = "rgb(0, 0, 0)";
@@ -26,19 +33,11 @@ CanvasDrawer = function() {
             }
 
             if (element !== null) {
-                element.className = "square";
-                squares.push(square);
-                elements.push(element);
-                $("#square_container").append(element);
-
+                addElement(element, square);
                 var closeSquare = square.getCloseSquare();
                 if (closeSquare !== null) {
                     var closeElement = document.createElement("div");
-                    closeElement.style.position = "fixed";
-
-                    elements.push(closeElement);
-                    squares.push(closeSquare);
-                    $("#square_container").append(closeElement);
+                    addElement(closeElement, closeSquare);
                 }
             }
         },
