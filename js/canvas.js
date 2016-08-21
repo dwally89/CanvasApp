@@ -43,8 +43,8 @@ var CanvasModel = function() {
             }
 
             // Set initial position to random area
-            square.setX1(Math.floor(Math.random() * 800));
-            square.setY1(Math.floor(Math.random() * 600));
+            square.setX1(Math.floor(Math.random() * screen.width));
+            square.setY1(Math.floor(Math.random() * screen.height));
 
             drawer.addSquare(square);
             squares.push(closeSquare);
