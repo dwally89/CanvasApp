@@ -10,30 +10,36 @@ var CanvasModel = function() {
                 squareWidth / 4,
                 squareHeight / 4,
                 "orange");
-            if (squareType === "colour") {
-                if (drawer.verifyColour(parameter)) {
-                    square = new ColourSquare(
+            switch (squareType) {
+                case "colour":
+                    if (drawer.verifyColour(parameter)) {
+                        square = new ColourSquare(
+                            squareWidth,
+                            squareHeight,
+                            closeSquare,
+                            parameter);
+                    }
+                    else {
+                        alert("Invalid colour");
+                        return;
+                    }
+                    
+                    break;
+                case "image":
+                    var imageSource = "https://static-s.aa-cdn.net/img/gp/20600003844258/ZPZU6Ppsd4z1x4SOzP7P5O3KWe3LtoX4v_ZAyxbIHLEZMKJbiAih229_pSow783DSGw=w300?v=1";
+                    if (parameter !== "") {
+                        imageSource = parameter;
+                    }
+            
+                    square = new ImageSquare(
                         squareWidth,
                         squareHeight,
                         closeSquare,
-                        parameter);
-                }
-                else {
-                    alert("Invalid colour");
+                        imageSource);
+                    break;
+                default:
+                    alert("Unknown square type");
                     return;
-                }
-            }
-            else if (squareType === "image") {
-                var imageSource = "https://static-s.aa-cdn.net/img/gp/20600003844258/ZPZU6Ppsd4z1x4SOzP7P5O3KWe3LtoX4v_ZAyxbIHLEZMKJbiAih229_pSow783DSGw=w300?v=1";
-                if (parameter !== "") {
-                    imageSource = parameter;
-                }
-
-                square = new ImageSquare(
-                    squareWidth,
-                    squareHeight,
-                    closeSquare,
-                    imageSource);
             }
 
             // Set initial position to random area

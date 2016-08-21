@@ -12,12 +12,17 @@ CanvasDrawer = function() {
         },
         addSquare: function(square) {
             var element = null;
-            if (square.getType() === "ColourSquare") {
-                element = document.createElement("div");
-            }
-            else if (square.getType() == "ImageSquare") {
-                element = document.createElement("img");
-                element.draggable = false;
+            switch (square.getType()){
+                case "ColourSquare":
+                    element = document.createElement("div");
+                    break;
+                case "ImageSquare":
+                    element = document.createElement("img");
+                    element.draggable = false;
+                    break;
+                default:
+                    alert("Unknown square type");
+                    return;
             }
 
             if (element !== null) {
@@ -46,11 +51,16 @@ CanvasDrawer = function() {
             for (var i = 0; i < squares.length; i++) {
                 var square = squares[i];
                 var element = elements[i];
-                if (square.getType() === "ColourSquare") {
-                    element.style.background = square.displayColour;
-                }
-                else if (square.getType() === "ImageSquare") {
-                    element.src = square.imageSource;
+                switch (square.getType()) {
+                    case "ColourSquare":
+                        element.style.background = square.displayColour;
+                        break;
+                    case "ImageSquare":
+                        element.src = square.imageSource;
+                        break;
+                    default:
+                        alert("Unknown square type");
+                        return;
                 }
 
                 element.style.left = Utils.toPixels(square.getX1());
@@ -59,13 +69,18 @@ CanvasDrawer = function() {
                 element.style.height = Utils.toPixels(square.getHeight());
                 element.style.opacity = square.isTouched ? 0.5 : 1;
                 
-                var edgeTouched = square.getEdgeTouched();
-                if (edgeTouched === null){
-                    element.style.cursor = "default";
-                }else if (edgeTouched === Edge.Top || edgeTouched === Edge.Bottom){
-                    element.style.cursor = "ns-resize";
-                } else {
-                    element.style.cursor = "ew-resize";
+                switch(square.getEdgeTouched()){
+                    case Edge.Top:
+                    case Edge.Bottom:
+                        element.style.cursor = "ns-resize";
+                        break;
+                    case Edge.Left:
+                    case Edge.Right:
+                        element.style.cursor = "ew-resize";
+                        break;
+                    default:
+                        element.style.cursor = "default";
+                        break;
                 }
             }
         },

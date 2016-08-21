@@ -50,25 +50,28 @@ var SquareEventBinder = (function() {
                 if (square !== null) {
                     square.isTouched = true;
                     if (moving) {
-                        var edgeTouched = square.getEdgeTouched();
                         var dx = event.pageX - startX;
                         var dy = event.pageY - startY;
                         Logger.debug("deltas: (" + dx + "," + dy + ")");
-                        if (edgeTouched === null){
-                            square.setX1(squareStartX + dx);
-                            square.setY1(squareStartY + dy);
-                        } else {
-                            if (edgeTouched === Edge.Bottom) {
+                        switch(square.getEdgeTouched()){
+                            case Edge.Bottom:
                                 square.setHeight(squareOriginalHeight + dy);
-                            } else if (edgeTouched === Edge.Right) {
+                                break;
+                            case Edge.Right:
                                 square.setWidth(squareOriginalWidth + dx);
-                            } else if (edgeTouched === Edge.Top) {
+                                break;
+                            case Edge.Top:
                                 square.setY1(squareStartY + dy);
                                 square.setHeight(squareOriginalHeight - dy);
-                            } else if (edgeTouched === Edge.Left) {
+                                break;
+                            case Edge.Left:
                                 square.setX1(squareStartX + dx);
                                 square.setWidth(squareOriginalWidth - dx);
-                            }
+                                break;
+                            default:
+                                square.setX1(squareStartX + dx);
+                                square.setY1(squareStartY + dy);
+                                break;
                         }
                     }
                 }
