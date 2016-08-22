@@ -18,3 +18,11 @@ var Utils = (function() {
         }
     };
 }());
+
+var Random = (function() {
+    return {
+        generate: function(max, min=0) {
+            return Math.floor(Math.random() * max);
+        }
+    }
+}());
